@@ -1,0 +1,20 @@
+# maildrop rules
+
+DEFAULT="$HOME/Maildir"
+TYPE="maildir"
+MAILDIRMAKE="/usr/bin/maildirmake"
+ECHO="/bin/echo"
+MAIL="/usr/bin/mail"
+FOLDERS="$DEFAULT/"
+
+logfile "$HOME/.mailfilter.log"
+
+if ( /^List-Id:.*<([0-9A-Za-z_\-]+)\.+/ )
+{
+    LISTNAME="$MATCH1"
+    `${MAILDIRMAKE} -f "$LISTNAME" "$DEFAULT"`
+    to ${FOLDERS}$LISTNAME
+}
+
+to $DEFAULT
+
